@@ -141,6 +141,21 @@
             position: relative;
             z-index: 10;
         }
+
+        /* Specific styles for the Builder Form */
+        .builder-section {
+            display: none;
+            animation: slideDown 0.4s ease-out forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #94a3b8;
+        }
     </style>
 </head>
 <body>
@@ -173,11 +188,11 @@
                         </div>
                     </a>
                 </div>
-                <div class="hidden md:flex space-x-10 font-medium">
+                <div class="hidden md:flex space-x-10 font-medium text-white">
                     <a href="#home" class="nav-link transition-all">Home</a>
                     <a href="#services" class="nav-link transition-all">Services</a>
                     <a href="#about" class="nav-link transition-all">About</a>
-                    <a href="#contact" class="bg-blue-600 px-6 py-2.5 rounded-full hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20">Contact</a>
+                    <a href="#contact" class="bg-blue-600 px-6 py-2.5 rounded-full hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20">Build & Inquiry</a>
                 </div>
                 <button class="md:hidden text-2xl text-white" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
@@ -205,11 +220,11 @@
                     Superior <span class="text-gradient">Tech</span> Support.
                 </h1>
                 <p class="text-slate-400 text-xl max-w-lg leading-relaxed">
-                    Precision hardware repairs and security solutions by <span class="text-white font-semibold">Hash</span>. Keeping your digital infrastructure running at peak performance.
+                    Custom <span class="text-white font-semibold">High-End PC Building</span> and expert hardware repairs by <span class="text-white font-semibold">Hash</span>. Precision for your digital world.
                 </p>
                 <div class="flex flex-wrap gap-5">
-                    <a href="#services" class="bg-blue-600 hover:bg-blue-500 px-10 py-4 rounded-2xl font-bold transition-all flex items-center shadow-xl shadow-blue-600/30">
-                        View Services <i class="fas fa-arrow-right ml-3"></i>
+                    <a href="#contact" class="bg-blue-600 hover:bg-blue-500 px-10 py-4 rounded-2xl font-bold transition-all flex items-center shadow-xl shadow-blue-600/30">
+                        Start Custom Build <i class="fas fa-tools ml-3"></i>
                     </a>
                     <a href="tel:7994373914" class="border border-slate-700 hover:bg-white/5 px-10 py-4 rounded-2xl font-bold transition-all">
                         Call Technician
@@ -232,6 +247,14 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Custom Build Highlight -->
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start border-blue-500/50">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-blue-400">High-End PC Building</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Workstations & Gaming Rigs. Choose your CPU, GPU, and Motherboard for the ultimate performance.</p>
+                </div>
                 <!-- PC/Laptop -->
                 <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
                     <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
@@ -254,7 +277,7 @@
                         <i class="fas fa-print"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4">Printer Service</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Comprehensive maintenance for Laser/Inkjet printers and high-quality toner refilling.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Comprehensive maintenance for Laser/Inkjet printers and toner refilling.</p>
                 </div>
                 <!-- UPS -->
                 <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
@@ -270,7 +293,7 @@
                         <i class="fas fa-video"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4">CCTV Systems</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Professional installation of IP/HD security cameras with remote mobile monitoring setup.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Professional installation of IP/HD security cameras with remote mobile monitoring.</p>
                 </div>
                 <!-- Networking -->
                 <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
@@ -278,40 +301,42 @@
                         <i class="fas fa-network-wired"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4">Networking</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Structured cabling, Wi-Fi coverage optimization, and router configurations for business.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Structured cabling, Wi-Fi optimization, and router configurations for business.</p>
                 </div>
                 <!-- Custom Build -->
                 <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
                     <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
-                        <i class="fas fa-desktop"></i>
+                        <i class="fas fa-screwdriver-wrench"></i>
                     </div>
-                    <h4 class="text-xl font-bold mb-4">Custom PC Builds</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Tailor-made gaming rigs and high-end workstations optimized for your specific workflow.</p>
+                    <h4 class="text-xl font-bold mb-4">General Maintenance</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Software installation, virus removal, and OS installations for all systems.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact & Location -->
+    <!-- Build & Contact Section -->
     <section id="contact" class="py-32 bg-white text-slate-900 rounded-[4rem] mx-4 my-8">
         <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-20">
             <div class="space-y-12">
                 <div>
-                    <h3 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Get In Touch</h3>
-                    <h2 class="text-5xl font-extrabold mb-6">Let's solve your tech issues.</h2>
-                    <p class="text-slate-500 text-lg">Visit Byte Systems in Ettumanoor or connect with Hash via any of the channels below.</p>
+                    <h3 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Configuration Portal</h3>
+                    <h2 class="text-5xl font-extrabold mb-6">Build Your High-End Machine.</h2>
+                    <p class="text-slate-500 text-lg">Select your preferred components below. Hash will review your configuration and provide a professional quote.</p>
                 </div>
 
                 <div class="grid gap-8">
-                    <a href="https://maps.app.goo.gl/jdmeWQo62W8BjT5JA" target="_blank" class="flex items-start group">
-                        <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
-                            <i class="fas fa-location-dot text-xl"></i>
-                        </div>
-                        <div class="ml-6">
-                            <p class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Our Location</p>
-                            <p class="text-lg font-bold">Kasturi Buildings, Kodathippadi Junction, Ettumanoor</p>
-                        </div>
-                    </a>
+                    <div class="p-6 bg-slate-50 rounded-3xl border border-slate-200">
+                        <h4 class="font-bold text-xl mb-4 flex items-center">
+                            <i class="fas fa-info-circle text-blue-600 mr-3"></i> How it works
+                        </h4>
+                        <ul class="text-slate-500 space-y-2 text-sm">
+                            <li>1. Choose "Custom High-End PC" in Service Type.</li>
+                            <li>2. Select your CPU, GPU, and RAM.</li>
+                            <li>3. Submit and Hash will contact you with pricing.</li>
+                        </ul>
+                    </div>
+                    
                     <div class="flex flex-wrap gap-8">
                         <a href="tel:7994373914" class="flex items-center group">
                             <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
@@ -319,39 +344,119 @@
                             </div>
                             <span class="ml-4 font-bold text-lg">7994373914</span>
                         </a>
-                        <a href="mailto:bytesystemsofficial@outlook.com" class="flex items-center group">
-                            <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i class="fas fa-envelope"></i>
+                        <a href="https://wa.me/917994373914" class="flex items-center group">
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all">
+                                <i class="fab fa-whatsapp"></i>
                             </div>
-                            <span class="ml-4 font-bold">Email Us</span>
+                            <span class="ml-4 font-bold">WhatsApp Now</span>
                         </a>
                     </div>
                 </div>
             </div>
 
             <div class="bg-slate-50 p-10 rounded-[3rem] border border-slate-200 shadow-xl">
-                <form onsubmit="handleSubmit(event)" class="space-y-6">
+                <form id="contact-form" onsubmit="handleSubmit(event)" class="space-y-6">
                     <div class="grid md:grid-cols-2 gap-6 text-left">
                         <div>
                             <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Full Name</label>
-                            <input type="text" required class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                            <input type="text" name="name" required class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Service Type</label>
-                            <select class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
-                                <option>PC/Laptop Repair</option>
-                                <option>Mobile Service</option>
-                                <option>CCTV Setup</option>
-                                <option>Printer/UPS Service</option>
+                            <select id="service-select" name="service" onchange="toggleBuildFields()" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                <option value="General Repair">General Repair</option>
+                                <option value="Custom High-End PC">Custom High-End PC Build</option>
+                                <option value="Laptop Configuration">Laptop Configuration</option>
+                                <option value="CCTV Installation">CCTV Installation</option>
+                                <option value="Networking">Networking</option>
                             </select>
                         </div>
                     </div>
-                    <div class="text-left">
-                        <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Message Detail</label>
-                        <textarea rows="4" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all" placeholder="Describe your issue..."></textarea>
+
+                    <!-- PC Customization Fields -->
+                    <div id="pc-builder" class="builder-section space-y-6 text-left">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Processor (CPU)</label>
+                                <select name="cpu" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                    <option>Core i9-14900K</option>
+                                    <option>Ryzen 9 7950X</option>
+                                    <option>Core i7-14700K</option>
+                                    <option>Ryzen 7 7800X3D</option>
+                                    <option>Other / Not Sure</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Graphics Card (GPU)</label>
+                                <select name="gpu" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                    <option>RTX 4090 24GB</option>
+                                    <option>RTX 4080 Super</option>
+                                    <option>RTX 4070 Ti</option>
+                                    <option>RX 7900 XTX</option>
+                                    <option>Other / Not Sure</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Motherboard</label>
+                                <select name="motherboard" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                    <option>ASUS ROG Maximus</option>
+                                    <option>MSI MEG Z790</option>
+                                    <option>Gigabyte AORUS Elite</option>
+                                    <option>ASRock Taichi</option>
+                                    <option>Other / Not Sure</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Memory (RAM)</label>
+                                <select name="ram" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                    <option>64GB DDR5 (2x32)</option>
+                                    <option>32GB DDR5 (2x16)</option>
+                                    <option>16GB DDR5 (2x8)</option>
+                                    <option>Other / Higher</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all shadow-xl">
-                        Send Inquiry
+
+                    <!-- Laptop Configuration Fields -->
+                    <div id="laptop-builder" class="builder-section space-y-6 text-left">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Desired Laptop Use</label>
+                            <select name="laptop_use" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                <option>High-End Gaming</option>
+                                <option>Video Editing / Rendering</option>
+                                <option>Office / Business</option>
+                                <option>Student / Daily Use</option>
+                            </select>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Preferred Screen Size</label>
+                                <select name="screen" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                    <option>14-inch (Portable)</option>
+                                    <option>15.6-inch (Standard)</option>
+                                    <option>17-inch (Desktop Replacement)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Storage SSD</label>
+                                <select name="storage" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                                    <option>512GB NVMe</option>
+                                    <option>1TB NVMe</option>
+                                    <option>2TB NVMe</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-left">
+                        <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Detailed Message / Additional Specs</label>
+                        <textarea name="message" rows="4" required class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all" placeholder="Tell Hash more about your requirements..."></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all shadow-xl">
+                        Send Configuration Inquiry
                     </button>
                 </form>
             </div>
@@ -371,14 +476,14 @@
         </div>
     </footer>
 
-    <!-- Success Feedback -->
+    <!-- Success Feedback Modal -->
     <div id="modal" class="fixed inset-0 bg-slate-950/80 z-[200] hidden items-center justify-center p-6 backdrop-blur-sm">
         <div class="bg-white rounded-[2.5rem] p-12 max-w-sm w-full text-center shadow-2xl scale-in">
             <div class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-8 animate-bounce">
                 <i class="fas fa-check"></i>
             </div>
-            <h3 class="text-3xl font-extrabold mb-4 text-slate-900">Submitted!</h3>
-            <p class="text-slate-500 mb-10 leading-relaxed">Thank you, Hash. We will review your inquiry and connect with you shortly.</p>
+            <h3 class="text-3xl font-extrabold mb-4 text-slate-900">Request Sent!</h3>
+            <p class="text-slate-500 mb-10 leading-relaxed">Thank you, Hash. We have received your custom configuration inquiry. We will contact you soon!</p>
             <button onclick="closeModal()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all">
                 Close
             </button>
@@ -400,6 +505,22 @@
             el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-hover'));
         });
+
+        // Toggle Fields based on Service Selection
+        function toggleBuildFields() {
+            const service = document.getElementById('service-select').value;
+            const pcBuilder = document.getElementById('pc-builder');
+            const laptopBuilder = document.getElementById('laptop-builder');
+
+            pcBuilder.style.display = 'none';
+            laptopBuilder.style.display = 'none';
+
+            if (service === 'Custom High-End PC') {
+                pcBuilder.style.display = 'block';
+            } else if (service === 'Laptop Configuration') {
+                laptopBuilder.style.display = 'block';
+            }
+        }
 
         // Vortex Animation Script
         const canvas = document.getElementById('particle-canvas');
@@ -473,17 +594,45 @@
         window.onload = () => {
             resizeCanvas();
             animate();
+            toggleBuildFields(); // Ensure correct state on load
         };
 
         function toggleMenu() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
-        function handleSubmit(e) {
+        async function handleSubmit(e) {
             e.preventDefault();
-            document.getElementById('modal').classList.remove('hidden');
-            document.getElementById('modal').classList.add('flex');
-            e.target.reset();
+            const form = e.target;
+            const submitBtn = document.getElementById('submit-btn');
+            const originalBtnText = submitBtn.innerText;
+            
+            submitBtn.innerText = "Processing Specs...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch("https://formspree.io/f/mqakvjge", {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    document.getElementById('modal').classList.remove('hidden');
+                    document.getElementById('modal').classList.add('flex');
+                    form.reset();
+                    toggleBuildFields();
+                } else {
+                    alert("Submission failed. Please contact via WhatsApp.");
+                }
+            } catch (error) {
+                alert("An error occurred. Check your connection.");
+            } finally {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }
         }
 
         function closeModal() {
