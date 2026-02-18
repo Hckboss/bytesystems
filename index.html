@@ -7,390 +7,488 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
         
+        :root {
+            --primary-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --dark-bg: #0b1120;
+            --card-glass: rgba(30, 41, 59, 0.7);
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             scroll-behavior: smooth;
+            overflow-x: hidden;
+            background-color: var(--dark-bg);
+            cursor: none;
+            color: #f8fafc;
         }
 
-        .hero-gradient {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        /* Prevent default cursor on interactive elements */
+        a, button, select, input, textarea {
+            cursor: none !important;
         }
 
+        /* Custom Cursor Style */
+        #custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+            box-shadow: 0 0 15px var(--primary-blue), 0 0 30px var(--primary-blue);
+        }
+
+        #custom-cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid rgba(6, 182, 212, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+        }
+
+        .cursor-hover {
+            width: 70px !important;
+            height: 70px !important;
+            border-color: var(--accent-cyan) !important;
+            background-color: rgba(6, 182, 212, 0.05);
+        }
+
+        /* Dynamic Tech Background */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Classes */
         .glass-nav {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            border-color: #3b82f6;
+        .glass-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.3);
+            background: rgba(30, 41, 59, 0.9);
         }
 
-        .service-icon {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        .service-icon-bg {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-cyan) 100%);
         }
-        
+
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navigation Links Glow */
+        .nav-link:hover {
+            text-shadow: 0 0 10px var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        /* Floating WhatsApp Button */
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
+            bottom: 30px;
+            right: 30px;
+            background-color: #22c55e;
             color: white;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 100;
-            width: 60px;
-            height: 60px;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s;
+            font-size: 32px;
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .whatsapp-float:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(10deg);
         }
 
         .logo-img {
-            max-height: 45px;
+            max-height: 50px;
             width: auto;
-            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body>
 
-    <!-- Floating WhatsApp Button -->
+    <!-- Tech Cursor -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-outline"></div>
+
+    <!-- WhatsApp Quick Connect -->
     <a href="https://wa.me/917994373914" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- Navigation -->
-    <nav class="glass-nav fixed w-full z-50 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="glass-nav fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
                     <a href="#home" class="flex items-center">
                         <img src="Gemini_Generated_Image_v5wr4pv5wr4pv5wr-removebg-preview-removebg-preview.png" 
                              alt="Byte Systems Logo" 
                              class="logo-img"
-                             onerror="this.style.display='none'; document.getElementById('text-logo-nav').classList.remove('hidden')">
+                             onerror="this.style.display='none'; const el = document.getElementById('text-logo-nav'); if(el) el.classList.remove('hidden')">
                         
                         <div id="text-logo-nav" class="hidden flex items-center space-x-2">
-                            <div class="w-10 h-10 service-icon rounded-lg flex items-center justify-center">
-                                <i class="fas fa-microchip text-xl"></i>
+                            <div class="w-10 h-10 service-icon-bg rounded-lg flex items-center justify-center">
+                                <i class="fas fa-microchip text-white text-xl"></i>
                             </div>
-                            <span class="text-2xl font-bold tracking-tight">BYTE SYSTEMS</span>
+                            <span class="text-2xl font-bold tracking-tight text-white">BYTE SYSTEMS</span>
                         </div>
                     </a>
                 </div>
-                <div class="hidden md:flex space-x-8 font-medium">
-                    <a href="#home" class="hover:text-blue-400 transition">Home</a>
-                    <a href="#services" class="hover:text-blue-400 transition">Services</a>
-                    <a href="#about" class="hover:text-blue-400 transition">About Us</a>
-                    <a href="#contact" class="bg-blue-600 px-5 py-2 rounded-full hover:bg-blue-700 transition">Contact Us</a>
+                <div class="hidden md:flex space-x-10 font-medium">
+                    <a href="#home" class="nav-link transition-all">Home</a>
+                    <a href="#services" class="nav-link transition-all">Services</a>
+                    <a href="#about" class="nav-link transition-all">About</a>
+                    <a href="#contact" class="bg-blue-600 px-6 py-2.5 rounded-full hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20">Contact</a>
                 </div>
-                <button class="md:hidden text-2xl" onclick="toggleMenu()">
+                <button class="md:hidden text-2xl text-white" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 px-4 pt-2 pb-6 space-y-4 border-t border-slate-800">
-            <a href="#home" class="block text-lg">Home</a>
-            <a href="#services" class="block text-lg">Services</a>
-            <a href="#about" class="block text-lg">About Us</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 px-6 py-8 space-y-6 border-t border-slate-800">
+            <a href="#home" class="block text-lg text-white">Home</a>
+            <a href="#services" class="block text-lg text-white">Services</a>
+            <a href="#about" class="block text-lg text-white">About</a>
             <a href="#contact" class="block text-lg text-blue-400">Contact Us</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-gradient min-h-screen flex items-center pt-20 text-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8 animate-fade-in">
-                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
-                    Complete Tech <br>
-                    <span class="text-blue-500">Care & Support</span>
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <canvas id="particle-canvas"></canvas>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-16 items-center hero-content">
+            <div class="space-y-8">
+                <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-full">
+                    <span class="flex h-2 w-2 rounded-full bg-blue-500"></span>
+                    <span class="text-blue-400 text-sm font-semibold uppercase tracking-widest">Available Now in Ettumanoor</span>
+                </div>
+                <h1 class="text-6xl lg:text-7xl font-extrabold leading-[1.1]">
+                    Superior <span class="text-gradient">Tech</span> Support.
                 </h1>
-                <p class="text-slate-400 text-xl max-w-lg">
-                    Hash's Byte Systems — We provide expert solutions for everything from PC hardware to security surveillance. Fast, reliable, and professional support.
+                <p class="text-slate-400 text-xl max-w-lg leading-relaxed">
+                    Precision hardware repairs and security solutions by <span class="text-white font-semibold">Hash</span>. Keeping your digital infrastructure running at peak performance.
                 </p>
-                <div class="flex space-x-4">
-                    <a href="#services" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-bold transition flex items-center shadow-lg shadow-blue-900/20">
-                        Our Services <i class="fas fa-arrow-right ml-2"></i>
+                <div class="flex flex-wrap gap-5">
+                    <a href="#services" class="bg-blue-600 hover:bg-blue-500 px-10 py-4 rounded-2xl font-bold transition-all flex items-center shadow-xl shadow-blue-600/30">
+                        View Services <i class="fas fa-arrow-right ml-3"></i>
                     </a>
-                    <a href="tel:7994373914" class="border border-slate-700 hover:bg-slate-800 px-8 py-4 rounded-xl font-bold transition">
-                        Call Now
+                    <a href="tel:7994373914" class="border border-slate-700 hover:bg-white/5 px-10 py-4 rounded-2xl font-bold transition-all">
+                        Call Technician
                     </a>
                 </div>
             </div>
             <div class="relative hidden md:block">
-                <img src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800" alt="Tech Maintenance" class="rounded-3xl shadow-2xl relative z-10 border border-slate-800 transform rotate-3">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-25"></div>
+                <img src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800" alt="Tech Maintenance" class="rounded-3xl shadow-2xl relative border border-slate-800 rotate-2">
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Our Expertise</h2>
-                <h3 class="text-4xl font-bold text-slate-900">Professional Technical Solutions</h3>
+    <!-- Services Grid -->
+    <section id="services" class="py-32 relative bg-[#080d1a]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-24">
+                <h2 class="text-blue-500 font-bold uppercase tracking-widest text-sm mb-4">Our Expertise</h2>
+                <h3 class="text-4xl md:text-5xl font-bold">Solutions For Every Byte</h3>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- PC & Laptop -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- PC/Laptop -->
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-laptop"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">PC & Laptop Repair</h4>
-                    <p class="text-slate-600 text-sm">Motherboard service, RAM upgrades, and comprehensive repairs for all brands.</p>
+                    <h4 class="text-xl font-bold mb-4">PC & Laptop Repair</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Motherboard-level repairs, RAM/SSD upgrades, and chip-level servicing for all brands.</p>
                 </div>
-
                 <!-- Mobile -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-mobile-screen-button"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">Mobile Service</h4>
-                    <p class="text-slate-600 text-sm">Display replacement, battery fixes, and professional software troubleshooting.</p>
+                    <h4 class="text-xl font-bold mb-4">Mobile Service</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Expert display replacement, battery fixes, and specialized software troubleshooting.</p>
                 </div>
-
                 <!-- Printer -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-print"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">Printer Service</h4>
-                    <p class="text-slate-600 text-sm">Laser and Inkjet maintenance, toner refilling, and hardware jam fixes.</p>
+                    <h4 class="text-xl font-bold mb-4">Printer Service</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Comprehensive maintenance for Laser/Inkjet printers and high-quality toner refilling.</p>
                 </div>
-
                 <!-- UPS -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-car-battery"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">UPS & Inverter</h4>
-                    <p class="text-slate-600 text-sm">Battery replacement, power backup optimization, and circuit board repair.</p>
+                    <h4 class="text-xl font-bold mb-4">UPS & Inverter</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Battery health checks, power backup optimization, and circuit board servicing.</p>
                 </div>
-
                 <!-- CCTV -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-video"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">CCTV Systems</h4>
-                    <p class="text-slate-600 text-sm">Installation of HD and IP cameras with complete mobile remote view setup.</p>
+                    <h4 class="text-xl font-bold mb-4">CCTV Systems</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Professional installation of IP/HD security cameras with remote mobile monitoring setup.</p>
                 </div>
-
                 <!-- Networking -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-network-wired"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">Networking</h4>
-                    <p class="text-slate-600 text-sm">Wi-Fi configuration, LAN cabling, and router setup for homes and offices.</p>
+                    <h4 class="text-xl font-bold mb-4">Networking</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Structured cabling, Wi-Fi coverage optimization, and router configurations for business.</p>
                 </div>
-
-                <!-- Desktop -->
-                <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50 card-hover flex flex-col items-center text-center">
-                    <div class="w-14 h-14 service-icon rounded-2xl flex items-center justify-center text-white text-xl mb-6">
+                <!-- Custom Build -->
+                <div class="p-8 rounded-[2rem] glass-card flex flex-col items-start">
+                    <div class="w-14 h-14 service-icon-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-lg">
                         <i class="fas fa-desktop"></i>
                     </div>
-                    <h4 class="text-lg font-bold mb-3">Custom PC Builds</h4>
-                    <p class="text-slate-600 text-sm">High-performance gaming and professional workstations tailored to your needs.</p>
+                    <h4 class="text-xl font-bold mb-4">Custom PC Builds</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Tailor-made gaming rigs and high-end workstations optimized for your specific workflow.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-slate-50 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-16 items-center">
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800" alt="Technician at work" class="rounded-3xl shadow-xl">
-                <div class="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-2xl shadow-xl hidden md:block">
-                    <p class="text-3xl font-bold italic">"Excellence in every byte."</p>
-                </div>
-            </div>
-            <div class="space-y-6">
-                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">About Byte Systems</h2>
-                <h3 class="text-4xl font-bold">Your Trusted Technical Partner</h3>
-                <p class="text-slate-600 text-lg leading-relaxed">
-                    At Byte Systems, led by technician Hash, we believe in providing high-quality, reliable repairs. Whether it's a cracked screen, a network failure, or a security installation, we handle your technology with precision and care.
-                </p>
-                <ul class="space-y-4">
-                    <li class="flex items-center space-x-3 text-slate-700">
-                        <i class="fas fa-check-circle text-blue-600"></i>
-                        <span>Certified Hardware Professionals</span>
-                    </li>
-                    <li class="flex items-center space-x-3 text-slate-700">
-                        <i class="fas fa-check-circle text-blue-600"></i>
-                        <span>On-site & Emergency Support</span>
-                    </li>
-                    <li class="flex items-center space-x-3 text-slate-700">
-                        <i class="fas fa-check-circle text-blue-600"></i>
-                        <span>Genuine Spare Parts Only</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-slate-900 rounded-[3rem] p-8 md:p-16 text-white grid md:grid-cols-2 gap-12">
+    <!-- Contact & Location -->
+    <section id="contact" class="py-32 bg-white text-slate-900 rounded-[4rem] mx-4 my-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-20">
+            <div class="space-y-12">
                 <div>
-                    <h2 class="text-4xl font-bold mb-6">Contact Hash at<br>Byte Systems</h2>
-                    <p class="text-slate-400 mb-8 text-lg">Expert technical support is just a message away.</p>
-                    
-                    <div class="space-y-6">
-                        <!-- Location -->
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center shrink-0">
-                                <i class="fas fa-location-dot text-blue-400"></i>
-                            </div>
-                            <div>
-                                <p class="text-slate-400 text-sm">Our Location</p>
-                                <a href="https://maps.app.goo.gl/jdmeWQo62W8BjT5JA" target="_blank" class="font-medium hover:text-blue-400 transition block">
-                                    Kasturi Buildings, Kodathippadi Junction, Ettumanoor
-                                </a>
-                                <a href="https://maps.app.goo.gl/jdmeWQo62W8BjT5JA" target="_blank" class="mt-2 inline-flex items-center text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded-full text-blue-400 transition">
-                                    View on Google Maps <i class="fas fa-external-link-alt ml-2"></i>
-                                </a>
-                            </div>
+                    <h3 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Get In Touch</h3>
+                    <h2 class="text-5xl font-extrabold mb-6">Let's solve your tech issues.</h2>
+                    <p class="text-slate-500 text-lg">Visit Byte Systems in Ettumanoor or connect with Hash via any of the channels below.</p>
+                </div>
+
+                <div class="grid gap-8">
+                    <a href="https://maps.app.goo.gl/jdmeWQo62W8BjT5JA" target="_blank" class="flex items-start group">
+                        <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
+                            <i class="fas fa-location-dot text-xl"></i>
                         </div>
-                        <!-- Email Link -->
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-                                <i class="fas fa-envelope text-blue-400"></i>
-                            </div>
-                            <div>
-                                <p class="text-slate-400 text-sm">Send an Email</p>
-                                <a href="mailto:bytesystemsofficial@outlook.com" class="font-medium hover:text-blue-400 transition">bytesystemsofficial@outlook.com</a>
-                            </div>
+                        <div class="ml-6">
+                            <p class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Our Location</p>
+                            <p class="text-lg font-bold">Kasturi Buildings, Kodathippadi Junction, Ettumanoor</p>
                         </div>
-                        <!-- Phone Link -->
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-                                <i class="fas fa-phone text-blue-400"></i>
+                    </a>
+                    <div class="flex flex-wrap gap-8">
+                        <a href="tel:7994373914" class="flex items-center group">
+                            <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i class="fas fa-phone"></i>
                             </div>
-                            <div>
-                                <p class="text-slate-400 text-sm">Call Us Directly</p>
-                                <a href="tel:7994373914" class="font-medium hover:text-blue-400 transition">7994373914</a>
+                            <span class="ml-4 font-bold text-lg">7994373914</span>
+                        </a>
+                        <a href="mailto:bytesystemsofficial@outlook.com" class="flex items-center group">
+                            <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i class="fas fa-envelope"></i>
                             </div>
-                        </div>
-                        <!-- WhatsApp Link -->
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-                                <i class="fab fa-whatsapp text-green-400"></i>
-                            </div>
-                            <div>
-                                <p class="text-slate-400 text-sm">Chat on WhatsApp</p>
-                                <a href="https://wa.me/917994373914" target="_blank" class="font-medium hover:text-green-400 transition">Send us a message</a>
-                            </div>
-                        </div>
+                            <span class="ml-4 font-bold">Email Us</span>
+                        </a>
                     </div>
                 </div>
+            </div>
 
-                <div id="contact-form-container" class="bg-slate-800 p-8 rounded-3xl">
-                    <form onsubmit="handleSubmit(event)" class="space-y-4">
+            <div class="bg-slate-50 p-10 rounded-[3rem] border border-slate-200 shadow-xl">
+                <form onsubmit="handleSubmit(event)" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6 text-left">
                         <div>
-                            <label class="block text-sm text-slate-400 mb-2">Full Name</label>
-                            <input type="text" id="name" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition text-white">
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Full Name</label>
+                            <input type="text" required class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
                         </div>
                         <div>
-                            <label class="block text-sm text-slate-400 mb-2">Select Service</label>
-                            <select id="service" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition text-white">
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Service Type</label>
+                            <select class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
                                 <option>PC/Laptop Repair</option>
                                 <option>Mobile Service</option>
+                                <option>CCTV Setup</option>
                                 <option>Printer/UPS Service</option>
-                                <option>CCTV Installation</option>
-                                <option>Network Setup</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-sm text-slate-400 mb-2">Message</label>
-                            <textarea id="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition text-white"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-xl font-bold transition">
-                            Send Request
-                        </button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="text-left">
+                        <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Message Detail</label>
+                        <textarea rows="4" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all" placeholder="Describe your issue..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all shadow-xl">
+                        Send Inquiry
+                    </button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-50 py-12 border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex items-center justify-center mb-6">
-                 <img src="Gemini_Generated_Image_v5wr4pv5wr4pv5wr-removebg-preview-removebg-preview.png" 
-                      alt="Byte Systems Logo" 
-                      class="h-10 w-auto"
-                      onerror="this.style.display='none'; document.getElementById('text-logo-footer').classList.remove('hidden')">
-                 
-                 <div id="text-logo-footer" class="hidden flex items-center space-x-2">
-                    <div class="w-8 h-8 service-icon rounded flex items-center justify-center text-white">
-                        <i class="fas fa-microchip text-sm"></i>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight">BYTE SYSTEMS</span>
-                 </div>
+    <footer class="py-20 text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <img src="Gemini_Generated_Image_v5wr4pv5wr4pv5wr-removebg-preview-removebg-preview.png" alt="Logo" class="h-12 mx-auto mb-6" onerror="this.style.display='none'; document.getElementById('footer-text-logo').classList.remove('hidden')">
+                <p id="footer-text-logo" class="hidden text-2xl font-bold text-white mb-6 tracking-widest">BYTE SYSTEMS</p>
+                <p class="text-slate-500 max-w-md mx-auto">Expert technician services for PC, Laptop, CCTV, and more. Precise technology for a digital world.</p>
             </div>
-            <a href="https://maps.app.goo.gl/jdmeWQo62W8BjT5JA" target="_blank" class="text-slate-700 font-medium mb-2 hover:text-blue-600 transition block">
-                Kasturi Buildings, Kodathippadi Junction, Ettumanoor
-            </a>
-            <p class="text-slate-500 mb-6">© 2025 Byte Systems. Licensed Technician: Hash. Precision technology for a digital world.</p>
+            <div class="h-px bg-slate-800 w-full mb-12 opacity-50"></div>
+            <p class="text-slate-600 text-sm">© 2025 Byte Systems. Licensed Technician: Hash. Ettumanoor, Kerala.</p>
         </div>
     </footer>
 
-    <!-- Success Modal -->
-    <div id="modal" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-10 max-w-sm w-full text-center shadow-2xl">
-            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+    <!-- Success Feedback -->
+    <div id="modal" class="fixed inset-0 bg-slate-950/80 z-[200] hidden items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white rounded-[2.5rem] p-12 max-w-sm w-full text-center shadow-2xl scale-in">
+            <div class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-8 animate-bounce">
                 <i class="fas fa-check"></i>
             </div>
-            <h3 class="text-2xl font-bold mb-2 text-slate-900">Request Received!</h3>
-            <p class="text-slate-600 mb-8">Thank you Hash. We will get back to you within 24 hours.</p>
-            <button onclick="closeModal()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800 transition">
+            <h3 class="text-3xl font-extrabold mb-4 text-slate-900">Submitted!</h3>
+            <p class="text-slate-500 mb-10 leading-relaxed">Thank you, Hash. We will review your inquiry and connect with you shortly.</p>
+            <button onclick="closeModal()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all">
                 Close
             </button>
         </div>
     </div>
 
     <script>
-        // Menu toggle logic
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+        // Custom Cursor Logic
+        const cursor = document.getElementById('custom-cursor');
+        const cursorOutline = document.getElementById('custom-cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            cursorOutline.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
+        });
+
+        const hoverables = document.querySelectorAll('a, button, input, select, textarea, .glass-card');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-hover'));
+        });
+
+        // Vortex Animation Script
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: undefined, y: undefined, active: false };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
         }
 
-        // Form submit logic
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+            mouse.active = true;
+        });
+
+        const colors = ['#3b82f6', '#06b6d4', '#60a5fa', '#22d3ee', '#818cf8'];
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.angle = Math.random() * Math.PI * 2;
+                this.distance = Math.random() * (Math.max(canvas.width, canvas.height) * 0.45);
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                this.radius = Math.random() * 1.8 + 0.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.orbitSpeed = Math.random() * 0.015 - 0.007;
+                this.baseDistance = this.distance;
+            }
+            update() {
+                let centerX = mouse.active ? mouse.x : canvas.width / 2;
+                let centerY = mouse.active ? mouse.y : canvas.height / 2;
+                this.angle += this.orbitSpeed;
+                let targetX = centerX + Math.cos(this.angle) * this.distance;
+                let targetY = centerY + Math.sin(this.angle) * this.distance;
+                this.x += (targetX - this.x) * 0.04;
+                this.y += (targetY - this.y) * 0.04;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.5;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(500, (canvas.width * canvas.height) / 4000);
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(11, 17, 32, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = () => {
+            resizeCanvas();
+            animate();
+        };
+
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
         function handleSubmit(e) {
             e.preventDefault();
-            const modal = document.getElementById('modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
             e.target.reset();
         }
 
-        // Modal close logic
         function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
         }
     </script>
 </body>
